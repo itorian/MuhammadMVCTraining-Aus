@@ -29,5 +29,10 @@ namespace WebMVCApplication1.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Student> Students { get; set; }
+        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Marks> Marks { get; set; }
+        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Friend> Friends { get; set; }
+        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Address> Addresses { get; set; }
     }
 }
