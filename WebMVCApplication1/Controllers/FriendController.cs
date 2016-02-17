@@ -53,5 +53,13 @@ namespace WebMVCApplication1.Controllers
             db.SaveChanges();
             return View("Index");
         }
+
+        public ActionResult LoadFriend()
+        {
+            var friend = db.Friends.Include("Address");
+            return PartialView("_FriendList", friend);
+        }
+
+
     }
 }

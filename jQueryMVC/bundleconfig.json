@@ -1,0 +1,21 @@
+[
+  {
+    "outputFileName": "Scripts/CustomAjax.js",
+    "inputFiles": [
+      "Scripts/CustomAjax.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Site.css",
+    "inputFiles": [
+      "Content/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootsite.css",
+    "inputFiles": [
+      "Content/Site.css",
+      "Content/bootstrap.css"
+    ]
+  }
+]

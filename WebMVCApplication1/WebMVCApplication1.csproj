@@ -259,6 +259,8 @@
     <Content Include="Views\Friend\Create.cshtml" />
     <Content Include="Views\Friend\CreateAddress.cshtml" />
     <Content Include="Views\Friend\Index.cshtml" />
+    <Content Include="Views\Shared\_FriendList.cshtml" />
+    <Content Include="Views\Student\Abc.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

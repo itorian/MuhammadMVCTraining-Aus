@@ -10,7 +10,7 @@ $(function () {
 
             if (data == "null")
             {
-                $("#response").html("Please complete the form.");
+                $("#response").html("Please complete the form :)");
                 return;
             }
 
@@ -24,7 +24,5 @@ $(function () {
             $("#response").html(items);
         });
     })
-
-
 
 })
