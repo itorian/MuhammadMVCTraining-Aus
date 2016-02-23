@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="CustomAttributes\ExcludeCharsValAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +183,18 @@
     <Compile Include="Migrations\201602080222297_newColumnInAddress.cs" />
     <Compile Include="Migrations\201602080222297_newColumnInAddress.Designer.cs">
       <DependentUpon>201602080222297_newColumnInAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602230128352_requiredAdded.cs" />
+    <Compile Include="Migrations\201602230128352_requiredAdded.Designer.cs">
+      <DependentUpon>201602230128352_requiredAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602230130225_requiredAddedRemoved1.cs" />
+    <Compile Include="Migrations\201602230130225_requiredAddedRemoved1.Designer.cs">
+      <DependentUpon>201602230130225_requiredAddedRemoved1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602230131423_requiredAddedRemoved2.cs" />
+    <Compile Include="Migrations\201602230131423_requiredAddedRemoved2.Designer.cs">
+      <DependentUpon>201602230131423_requiredAddedRemoved2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -206,6 +219,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\customvalidator.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -277,6 +291,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602080222297_newColumnInAddress.resx">
       <DependentUpon>201602080222297_newColumnInAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602230128352_requiredAdded.resx">
+      <DependentUpon>201602230128352_requiredAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602230130225_requiredAddedRemoved1.resx">
+      <DependentUpon>201602230130225_requiredAddedRemoved1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602230131423_requiredAddedRemoved2.resx">
+      <DependentUpon>201602230131423_requiredAddedRemoved2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

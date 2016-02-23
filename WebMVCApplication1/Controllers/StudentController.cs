@@ -85,9 +85,16 @@ namespace WebMVCApplication1.Controllers
             {
                 db.Entry(student).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             return View(student);
+        }
+
+        // Student/CustomMethod/12
+        public ActionResult CustomMethod(int? id)
+        {
+            return View();
         }
 
         // GET: Student/Delete/5

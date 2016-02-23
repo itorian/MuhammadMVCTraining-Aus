@@ -14,4 +14,9 @@
         <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
         <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
     </address>
+
+    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <asp:RangeValidator ID="RangeValidator1" ControlToValidate ="TextBox1" runat="server" ErrorMessage="RangeValidator"></asp:RangeValidator>
+    <asp:Button ID="Button1" runat="server" Text="Submit" />
+
 </asp:Content>
