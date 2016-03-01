@@ -45,19 +45,40 @@ namespace WebMVCApplication1.Controllers
         // POST: Student/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Create([Bind(Include = "Id,Name,Address")] Student student)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Students.Add(student);
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(student);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Address")] Student student)
+        public JsonResult Create(string Name, string Address)
         {
-            if (ModelState.IsValid)
+            if (!String.IsNullOrEmpty(Name) && !String.IsNullOrEmpty(Address))
             {
-                db.Students.Add(student);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                //db.Students.Add(new Student { Name = Name, Address = Address });
+                //db.SaveChanges();
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
-
-            return View(student);
+            else
+                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult LoadStudents()
+        {
+            var result = db.Students.ToList();
+            return Json(new { data = result }, JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: Student/Edit/5
         public async Task<ActionResult> Edit(int? id)
