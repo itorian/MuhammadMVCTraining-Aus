@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jQueryMVC", "jQueryMVC\jQue
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAsync", "MVCAsync\MVCAsync.csproj", "{27CEDCE4-AFCB-4690-881F-194160FCE80B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPDotNetIdentity", "ASPDotNetIdentity\ASPDotNetIdentity.csproj", "{12FE0676-B6E8-492E-BF69-685EF58B2822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{27CEDCE4-AFCB-4690-881F-194160FCE80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27CEDCE4-AFCB-4690-881F-194160FCE80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27CEDCE4-AFCB-4690-881F-194160FCE80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FE0676-B6E8-492E-BF69-685EF58B2822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FE0676-B6E8-492E-BF69-685EF58B2822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FE0676-B6E8-492E-BF69-685EF58B2822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FE0676-B6E8-492E-BF69-685EF58B2822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
