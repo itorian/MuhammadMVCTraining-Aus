@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using ASPDotNetIdentity.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ASPDotNetIdentity
@@ -8,6 +9,7 @@ namespace ASPDotNetIdentity
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomExceptionFilter());
         }
     }
 }
