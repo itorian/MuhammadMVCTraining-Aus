@@ -33,5 +33,9 @@ namespace ASPDotNetIdentity.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ASPDotNetIdentity.Controllers.CheckBoxModel> CheckBoxModels { get; set; }
+
+        public System.Data.Entity.DbSet<ASPDotNetIdentity.Controllers.Address> Addresses { get; set; }
     }
 }
