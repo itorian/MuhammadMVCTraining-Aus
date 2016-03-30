@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using EmptyWebAPI.Models;
+using System.Web.Http.Routing;
+using System.Web;
+using EmptyWebAPI.Extension;
 
 namespace EmptyWebAPI.Controllers
 {
@@ -16,13 +16,143 @@ namespace EmptyWebAPI.Controllers
     {
         private StudentContext db = new StudentContext();
 
-        // Get, Post, Put, Delete
-
         // GET: api/Student
-        public IEnumerable<Student> GetStudents()
+        [Route("api/student", Name = "StudentList")]
+        public IHttpActionResult GetStudents(string sort = "name", int page = 1, int pageSize = 4)
         {
-            return db.Students;
+            // get data
+            var data = db.Students.AsQueryable();
+
+            // apply sorting on data
+            data = data.ApplySort(sort);  // do it later
+
+            // Limit max page size in response to 3
+            if (pageSize > 3)
+            {
+                pageSize = 3;
+            }
+
+            // Calculate totalCount and totalPage may have in database
+            var totalCount = data.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            // Generate previous page and next page Urls
+            var urlHelper = new UrlHelper(Request);
+            var previousPageLink = page > 1 ? urlHelper.Link("StudentList",
+                new
+                {
+                    page = page - 1,
+                    pageSize = pageSize,
+                    sort = sort
+                        // pass other query string vriables if any
+                    }) : "";
+            var nextPageLink = page < totalPages ? urlHelper.Link("StudentList",
+                new
+                {
+                    page = page + 1,
+                    pageSize = pageSize,
+                    sort = sort
+                        // pass other query string vriables if any
+                    }) : "";
+
+            // Create response header
+            var pagingResponseHeader = new
+            {
+                currentPage = page,
+                pageSize = pageSize,
+                totalCount = totalCount,
+                totalPages = totalPages,
+                previousPageLink = previousPageLink,
+                nextPageLink = nextPageLink
+            };
+
+            // Add paging stuff in HTTP response header
+            HttpContext.Current.Response.Headers.Add("Paging", Newtonsoft.Json.JsonConvert.SerializeObject(pagingResponseHeader));
+
+
+            return Ok(data.OrderBy(i=>i.Id).Skip(pageSize * (page - 1)).Take(pageSize));
         }
+
+
+
+
+
+
+        //public IHttpActionResult Get(string sort = "id", int page = 1, int pageSize = 5)
+        //{
+        //    // Get data
+        //    var data = db.AsQueryable();
+
+        //    // Apply sorting
+        //    data = data.ApplySort(sort);
+
+        //    // Limit max page size in response to 4
+        //    if (pageSize > 4)
+        //    {
+        //        pageSize = 4;
+        //    }
+
+        //    // Calculate totalCount and totalPage may have in database
+        //    var totalCount = data.Count();
+        //    var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+        //    // Generate previous page and next page Urls
+        //    var urlHelper = new UrlHelper(Request);
+        //    var previousPageLink = page > 1 ? urlHelper.Link("StudentList",
+        //        new
+        //        {
+        //            page = page - 1,
+        //            pageSize = pageSize,
+        //            sort = sort
+        //            // pass other query string vriables if any
+        //        }) : "";
+        //    var nextPageLink = page < totalPages ? urlHelper.Link("StudentList",
+        //        new
+        //        {
+        //            page = page + 1,
+        //            pageSize = pageSize,
+        //            sort = sort
+        //            // pass other query string vriables if any
+        //        }) : "";
+
+        //    // Create response header
+        //    var pagingResponseHeader = new
+        //    {
+        //        currentPage = page,
+        //        pageSize = pageSize,
+        //        totalCount = totalCount,
+        //        totalPages = totalPages,
+        //        previousPageLink = previousPageLink,
+        //        nextPageLink = nextPageLink
+        //    };
+
+        //    // Add paging stuff in HTTP response header
+        //    HttpContext.Current.Response.Headers.Add("Paging", Newtonsoft.Json.JsonConvert.SerializeObject(pagingResponseHeader));
+
+        //    return Ok(data.Skip(pageSize * (page - 1)).Take(pageSize));
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: api/Student/5
         [ResponseType(typeof(Student))]
