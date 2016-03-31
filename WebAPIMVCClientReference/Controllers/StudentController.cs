@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using DTO;
+using PagedList;
 
 namespace WebAPIMVCClientReference.Controllers
 {
     public class StudentController : Controller
     {
-        // Ref article: http://www.asp.net/web-api/overview/advanced/calling-a-web-api-from-a-net-client
-        
         // GET: Student
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sort = "id", int? page = 1, string fields = "id,name,address")
         {
             using (var client = new HttpClient())
             {
@@ -24,7 +23,7 @@ namespace WebAPIMVCClientReference.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/student");
+                HttpResponseMessage response = await client.GetAsync("api/student?sort=" + sort + "&page=" + page + "&fields=" + fields);
                 if (response.IsSuccessStatusCode)
                 {
                     List<Student> students = await response.Content.ReadAsAsync<List<Student>>();
@@ -32,10 +31,15 @@ namespace WebAPIMVCClientReference.Controllers
                     List<StudentViewModel> model = new List<StudentViewModel>();
                     StudentDTO dto = new StudentDTO();
                     model = dto.ConvertToStudentViewModel(students);
-                    
-                    return View(model);
+
+                    int pageSize = 3;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
                 }
-            }
+
+                var re = response.Content.ReadAsStringAsync().Result;
+
+            }            
 
             return View("Error");
         }

@@ -9,6 +9,9 @@ using EmptyWebAPI.Models;
 using System.Web.Http.Routing;
 using System.Web;
 using EmptyWebAPI.Extension;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Reflection;
 
 namespace EmptyWebAPI.Controllers
 {
@@ -16,15 +19,43 @@ namespace EmptyWebAPI.Controllers
     {
         private StudentContext db = new StudentContext();
 
+        /// <summary>
+        /// Paging, filtering and field level selection
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
         // GET: api/Student
         [Route("api/student", Name = "StudentList")]
-        public IHttpActionResult GetStudents(string sort = "name", int page = 1, int pageSize = 4)
+        public IHttpActionResult GetStudents(string sort = "name", int page = 1, int pageSize = 4, string fields = "id,name,address")
         {
-            // get data
             var data = db.Students.AsQueryable();
 
             // apply sorting on data
-            data = data.ApplySort(sort);  // do it later
+            //data = data.ApplySort(sort);  // do it later
+
+            // alternative way to sort data, try to fix above method to get things done generic
+            if (sort == "id")
+            {
+                data = data.OrderBy(i => i.Id);
+            }
+
+            if (sort == "-id")
+            {
+                data = data.OrderByDescending(i => i.Id);
+            }
+
+            if (sort == "name")
+            {
+                data = data.OrderBy(i => i.Name);
+            }
+
+            if (sort == "-name")
+            {
+                data = data.OrderByDescending(i => i.Name);
+            }
 
             // Limit max page size in response to 3
             if (pageSize > 3)
@@ -44,16 +75,16 @@ namespace EmptyWebAPI.Controllers
                     page = page - 1,
                     pageSize = pageSize,
                     sort = sort
-                        // pass other query string vriables if any
-                    }) : "";
+                    // pass other query string vriables if any
+                }) : "";
             var nextPageLink = page < totalPages ? urlHelper.Link("StudentList",
                 new
                 {
                     page = page + 1,
                     pageSize = pageSize,
                     sort = sort
-                        // pass other query string vriables if any
-                    }) : "";
+                    // pass other query string vriables if any
+                }) : "";
 
             // Create response header
             var pagingResponseHeader = new
@@ -69,14 +100,23 @@ namespace EmptyWebAPI.Controllers
             // Add paging stuff in HTTP response header
             HttpContext.Current.Response.Headers.Add("Paging", Newtonsoft.Json.JsonConvert.SerializeObject(pagingResponseHeader));
 
+            List<string> lstFields = new List<string>();
+            if (fields != null)
+            {
+                lstFields = fields.ToLower().Split(',').ToList();
+            }
 
-            return Ok(data.OrderBy(i=>i.Id).Skip(pageSize * (page - 1)).Take(pageSize));
+            return Ok(data.OrderBy(i=>i.Id).ToList().Select(i => new CreateShappedObjectExtension().CreateShappedObject(i, lstFields)).Skip(pageSize * (page - 1)).Take(pageSize));
         }
 
 
 
 
-
+        /// <summary>
+        /// Get method without field level selection
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         //public IHttpActionResult Get(string sort = "id", int page = 1, int pageSize = 5)
         //{
@@ -131,28 +171,6 @@ namespace EmptyWebAPI.Controllers
 
         //    return Ok(data.Skip(pageSize * (page - 1)).Take(pageSize));
         //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // GET: api/Student/5
         [ResponseType(typeof(Student))]
