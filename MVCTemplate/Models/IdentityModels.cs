@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace WebMVCApplication1.Models
+namespace MVCTemplate.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -29,13 +29,5 @@ namespace WebMVCApplication1.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Student> Students { get; set; }
-        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Marks> Marks { get; set; }
-        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Friend> Friends { get; set; }
-        public System.Data.Entity.DbSet<WebMVCApplication1.Models.Address> Addresses { get; set; }
-        public DbSet<WebMVCApplication1.Models.Registration> Registration { get; set; }
-
-        public System.Data.Entity.DbSet<WebMVCApplication1.Models.ViewModels.RegistrationVM> RegistrationVMs { get; set; }
     }
 }
