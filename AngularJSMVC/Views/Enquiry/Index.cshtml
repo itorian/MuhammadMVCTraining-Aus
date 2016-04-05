@@ -1,0 +1,53 @@
+﻿
+<div ng-app="EnquiryList" ng-controller="EnquiryCtrl">
+    <h2>Enquiry Details</h2>
+    <form>
+        <div class="col-sm-12">
+            <div><input type="hidden" ng-model="c.Id" /></div>
+            <div class="col-sm-3"><input type="text" placeholder="Name" class="form-control" ng-model="c.Name" id="name" /></div>
+            <div class="col-sm-3"><input type="text" placeholder="Email" class="form-control" ng-model="c.Email" /></div>
+            <div class="col-sm-3"><input type="text" placeholder="Contact" class="form-control" ng-model="c.Contact" /></div>
+            <div class="col-sm-3"><input type="text" placeholder="Details" class="form-control" ng-model="c.Details" /></div>
+            <div class="col-sm-3">
+                <input type="submit" value="Save" class="btn btn-primary" ng-click="addEnquiry(c);" ng-hide="IsInEditMode" />
+                <input type="submit" value="Edit" class="btn btn-primary" ng-click="editEnquiry(c);" ng-show="IsInEditMode" />
+                <input type="button" value="Cancel" class="btn btn-default" ng-click="clearFields();" />
+            </div>
+        </div>
+    </form>
+    <br />
+    <div ng-show="haveEnquiries();">
+        <h2>Enquiry List</h2>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Contact</td>
+                    <td>Details</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="enquiry in enquiries">
+                    <td>{{enquiry.Id}}</td>
+                    <td>{{enquiry.Name}}</td>
+                    <td>{{enquiry.Email}}</td>
+                    <td>{{enquiry.Contact}}</td>
+                    <td>{{enquiry.Details}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="doEdit(enquiry);">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEnquiry(enquiry.Id);">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
